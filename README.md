@@ -6,7 +6,7 @@ Multi-threaded and scalable elevator simulation written in C# (Windows Forms).
 
 ![screenshot](screenshot.png)
 
-Changes made to the original project:
+- Changes made to the original project:
 	- new graphics;
 	- new fire event: the building is on fire, lifts stop moving, passengers escape;
 	- logging to a text file.
