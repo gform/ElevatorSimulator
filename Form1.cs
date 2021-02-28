@@ -60,7 +60,7 @@ namespace LiftSimulator
             {
                 if ((PassengerToPaint != null) && (PassengerToPaint.GetPassengerVisibility()))
                 {
-                    g.DrawImage(PassengerToPaint.GetCurrentFrame(), PassengerToPaint.PassengerPosition.X, PassengerToPaint.PassengerPosition.Y + 15, 46, 75); // (35, 75) Y + 15, because passenger is 15 pixels lower than elevator
+                    g.DrawImage(PassengerToPaint.GetCurrentFrame(), PassengerToPaint.PassengerPosition.X, PassengerToPaint.PassengerPosition.Y + 26, 32, 64); // (35, 75) Y + 15, because passenger is 15 pixels lower than elevator
                 }
             }
         }

@@ -49,7 +49,7 @@ namespace LiftSimulator
         {
             this.myBuilding = myBuilding;
 
-            maximumAmmountOfPeopleInTheQueue = 8; //only 8 passengers at once can be visible in current layout
+            maximumAmmountOfPeopleInTheQueue = 11; //only 8 passengers at once can be visible in current layout
             this.arrayOfPeopleWaitingForElevator = new Passenger[maximumAmmountOfPeopleInTheQueue];
             this.floorIndex = floorNumber;
 
@@ -58,7 +58,7 @@ namespace LiftSimulator
             //Initialize variables, which depend on graphics:
             this.floorLevel = floorLevel;
             beginOfTheQueue = 368;
-            widthOfSlotForSinglePassenger = 46;
+            widthOfSlotForSinglePassenger = 32;
 
             //Turn off both lamps
             LampUp = false;

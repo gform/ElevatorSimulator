@@ -17,17 +17,26 @@ namespace LiftSimulator
 
         static Bitmap[] ArrayOfAllPassengerGraphics =
         {
-            new Bitmap(Properties.Resources.Bart_Simpson),
-            new Bitmap(Properties.Resources.Batman),
-            new Bitmap(Properties.Resources.Charlie_Brown),
-            new Bitmap(Properties.Resources.Fred_Flintstone),
-            new Bitmap(Properties.Resources.Homer_Sompson),
-            new Bitmap(Properties.Resources.Jerry_mouse),
-            new Bitmap(Properties.Resources.Mickey_Mouse),
-            new Bitmap(Properties.Resources.Popeye),
-            new Bitmap(Properties.Resources.Smurfette),
-            new Bitmap(Properties.Resources.Spongebob),
-            new Bitmap(Properties.Resources.Yogi_Bear)
+            new Bitmap(Properties.Resources.Character_01),
+            new Bitmap(Properties.Resources.Character_02),
+            new Bitmap(Properties.Resources.Character_03),
+            new Bitmap(Properties.Resources.Character_04),
+            new Bitmap(Properties.Resources.Character_05),
+            new Bitmap(Properties.Resources.Character_06),
+            new Bitmap(Properties.Resources.Character_07),
+            new Bitmap(Properties.Resources.Character_08),
+            new Bitmap(Properties.Resources.Character_09),
+            new Bitmap(Properties.Resources.Character_10),
+            new Bitmap(Properties.Resources.Character_11),
+            new Bitmap(Properties.Resources.Character_12),
+            new Bitmap(Properties.Resources.Character_13),
+            new Bitmap(Properties.Resources.Character_14),
+            new Bitmap(Properties.Resources.Character_15),
+            new Bitmap(Properties.Resources.Character_16),
+            new Bitmap(Properties.Resources.Character_17),
+            new Bitmap(Properties.Resources.Character_18),
+            new Bitmap(Properties.Resources.Character_19),
+            new Bitmap(Properties.Resources.Character_20)
         };
 
         private Building myBuilding;

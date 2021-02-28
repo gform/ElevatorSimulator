@@ -128,21 +128,30 @@
     <None Include="Resources\LiftDoors_Open.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Bart_Simpson.png" />
-    <Content Include="Resources\Batman.png" />
-    <Content Include="Resources\Charlie_Brown.png" />
+    <None Include="Resources\Character_01.png" />
+    <None Include="Resources\Character_02.png" />
+    <None Include="Resources\Character_03.png" />
+    <None Include="Resources\Character_04.png" />
+    <None Include="Resources\Character_05.png" />
+    <None Include="Resources\Character_06.png" />
+    <None Include="Resources\Character_07.png" />
+    <None Include="Resources\Character_08.png" />
+    <None Include="Resources\Character_09.png" />
+    <None Include="Resources\Character_10.png" />
+    <None Include="Resources\Character_11.png" />
+    <None Include="Resources\Character_12.png" />
+    <None Include="Resources\Character_13.png" />
+    <None Include="Resources\Character_14.png" />
+    <None Include="Resources\Character_15.png" />
+    <None Include="Resources\Character_16.png" />
+    <None Include="Resources\Character_17.png" />
+    <None Include="Resources\Character_18.png" />
+    <None Include="Resources\Character_19.png" />
+    <None Include="Resources\Character_20.png" />
     <Content Include="screenshot.png" />
     <None Include="Resources\Fire.png" />
     <None Include="Resources\Fire_truck.png" />
-    <Content Include="Resources\Fred_Flintstone.png" />
-    <Content Include="Resources\Homer_Sompson.png" />
-    <Content Include="Resources\Jerry_mouse.png" />
     <None Include="Resources\Ladder.png" />
-    <Content Include="Resources\Mickey_Mouse.png" />
-    <Content Include="Resources\Popeye.png" />
-    <Content Include="Resources\Smurfette.png" />
-    <Content Include="Resources\Spongebob.png" />
-    <Content Include="Resources\Yogi_Bear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
