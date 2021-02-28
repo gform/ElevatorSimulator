@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiftSimulator.Custom_classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,12 +36,16 @@ namespace LiftSimulator
 
         private System.Timers.Timer floorChecker;
 
+        public LogWriter logWriter;
+
+        private Building myBuilding;
+
         #endregion
 
 
         #region METHODS
 
-        public ElevatorManager(Elevator[] ArrayOfAllElevators, Floor[] ArrayOfAllFloors)
+        public ElevatorManager(Elevator[] ArrayOfAllElevators, Floor[] ArrayOfAllFloors, Building building)
         {
             //Initialize array with elevators
             this.arrayOfAllElevators = ArrayOfAllElevators;
@@ -61,6 +66,10 @@ namespace LiftSimulator
             this.floorChecker = new System.Timers.Timer(1000);
             this.floorChecker.Elapsed += new ElapsedEventHandler(this.ElevatorManager_TimerElapsed);
             this.floorChecker.Start();
+
+            myBuilding = building;
+
+            logWriter = myBuilding.logWriter;
         }
 
         public void PassengerNeedsAnElevator(Floor PassengersFloor, Direction PassengersDirection)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using LiftSimulator.Custom_classes;
 
 namespace LiftSimulator
 {
@@ -17,7 +18,7 @@ namespace LiftSimulator
 
         private int maximumAmmountOfPeopleInTheQueue; // depends on graphic
 
-        private Passenger[] arrayOfPeopleWaitingForElevator;
+        public Passenger[] arrayOfPeopleWaitingForElevator;
 
         private List<Elevator> listOfElevatorsWaitingHere;
 
@@ -37,6 +38,8 @@ namespace LiftSimulator
         public bool LampUp; //indicates, that at least one of passengers wants to up
         public bool LampDown; //indicates, that at least one of passengers wants to down
 
+        public LogWriter logWriter;
+
         #endregion
 
 
@@ -54,12 +57,14 @@ namespace LiftSimulator
 
             //Initialize variables, which depend on graphics:
             this.floorLevel = floorLevel;
-            beginOfTheQueue = 367;
+            beginOfTheQueue = 368;
             widthOfSlotForSinglePassenger = 46;
 
             //Turn off both lamps
             LampUp = false;
             LampDown = false;
+
+            logWriter = myBuilding.logWriter;
         }
 
         private int? FindFirstFreeSlotInQueue()
@@ -93,14 +98,19 @@ namespace LiftSimulator
 
                     //Add passenger to Building's list
                     myBuilding.ListOfAllPeopleWhoNeedAnimation.Add(PassengerToAddOrRemvove);
+
+                    logWriter.Log($"Passenger ({PassengerToAddOrRemvove.Id}) added to the queue.");
                 }
             }
             else //Remove passenger
             {
                 int PassengerToRemoveIndex = Array.IndexOf<Passenger>(GetArrayOfPeopleWaitingForElevator(), PassengerToAddOrRemvove);
+
                 this.GetArrayOfPeopleWaitingForElevator()[PassengerToRemoveIndex] = null;
+                logWriter.Log($"Passenger ({PassengerToAddOrRemvove.Id}) removed from the queue.");
             }            
         }
+
 
         public void AddRemoveElevatorToTheListOfElevatorsWaitingHere(Elevator ElevatorToAddOrRemove, bool AddFlag)
         {
@@ -113,6 +123,8 @@ namespace LiftSimulator
 
                     //Subscribe to an event, rised when passenger entered the elevator
                     ElevatorToAddOrRemove.PassengerEnteredTheElevator += new EventHandler(this.Floor_PassengerEnteredTheElevator);
+                    logWriter.Log($"Elevator ({ElevatorToAddOrRemove.Id}) added to the floor ({FloorIndex}).");
+
                 }
                 else //Remove elevator
                 {
@@ -121,6 +133,8 @@ namespace LiftSimulator
 
                     //Unsubscribe from an event, rised when passenger entered the elevator
                     ElevatorToAddOrRemove.PassengerEnteredTheElevator -= this.Floor_PassengerEnteredTheElevator;
+                    logWriter.Log($"Elevator ({ElevatorToAddOrRemove.Id}) removed from the floor ({FloorIndex}).");
+
                 }
             }
         }
@@ -135,6 +149,7 @@ namespace LiftSimulator
             lock (locker) //The same lock is on add/remove passenger to the queue
             {
                 int CurrentAmmountOfPeopleInTheQueue = 0;
+
                 for (int i = 0; i < maximumAmmountOfPeopleInTheQueue; i++)
                 {
                     if (this.arrayOfPeopleWaitingForElevator[i] != null)

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Custom classes\Building.cs" />
+    <Compile Include="Custom classes\LogWriter.cs" />
     <Compile Include="CustomTypes\DirectionEnum.cs" />
     <Compile Include="CustomTypes\ElevatorEventArgs.cs" />
     <Compile Include="CustomTypes\ElevatorStatusEnum.cs" />
@@ -87,18 +88,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -106,13 +107,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Building.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Building.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LiftDoors.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\LiftDoors_Closed.jpg" />
@@ -133,43 +128,20 @@
     <None Include="Resources\LiftDoors_Open.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PassengerBody.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TrollFace.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TrollMan.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TrollManFat.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TrollManFatAlfa.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TrollManFatAlfaGIF.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\NoMan.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SheSmartass.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Smile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Geek.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SheMad.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ForeverAlone.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SheSmile.png" />
+    <Content Include="Resources\Bart_Simpson.png" />
+    <Content Include="Resources\Batman.png" />
+    <Content Include="Resources\Charlie_Brown.png" />
+    <None Include="Resources\Fire.png" />
+    <None Include="Resources\Fire_truck.png" />
+    <Content Include="Resources\Fred_Flintstone.png" />
+    <Content Include="Resources\Homer_Sompson.png" />
+    <Content Include="Resources\Jerry_mouse.png" />
+    <None Include="Resources\Ladder.png" />
+    <Content Include="Resources\Mickey_Mouse.png" />
+    <Content Include="Resources\Popeye.png" />
+    <Content Include="Resources\Smurfette.png" />
+    <Content Include="Resources\Spongebob.png" />
+    <Content Include="Resources\Yogi_Bear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

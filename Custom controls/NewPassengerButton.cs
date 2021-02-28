@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
+using LiftSimulator.Custom_classes;
 
 namespace LiftSimulator
 {
@@ -33,6 +35,8 @@ namespace LiftSimulator
             private set { }
         }
 
+        public LogWriter logWriter;
+
         #endregion FIELDS
 
 
@@ -40,7 +44,8 @@ namespace LiftSimulator
 
         public NewPassengerButton()
         {
-            InitializeComponent();                        
+            InitializeComponent();
+            logWriter = new LogWriter();
         }               
 
         #endregion METHODS
@@ -63,24 +68,30 @@ namespace LiftSimulator
 
                 //Where the passenger is going to?
                 FloorSelectionDialog dialog = new FloorSelectionDialog(); //create new dialog
+                List<int> allFloorsButThis = new List<int>();
+                Random random = new Random();
                 for (int i = 0; i < MyForm.MyBuilding.ArrayOfAllFloors.Length; i++) //populate combo box with list of available floors
                 {
                     if (i != FloorIndex) //skip current floor
                     {
                         dialog.ListOfFloorsInComboBox.Add(i);
+                        allFloorsButThis.Add(i);
                     }                    
                 }
 
-                //Select "0" floor by default (or "1", if floorIndex is "0")
-                if (FloorIndex == 0)
-                {
-                    dialog.SelectedFloorIndex = 1;
-                }
-                else
-                {
-                    dialog.SelectedFloorIndex = 0;
-                }   
-                                
+                //Select random floor by default
+                dialog.SelectedFloorIndex = allFloorsButThis[random.Next(0, 3)];
+
+                ////Select "0" floor by default (or "1", if floorIndex is "0")
+                //if (FloorIndex == 0)
+                //{
+                //    dialog.SelectedFloorIndex = 1;
+                //}
+                //else
+                //{
+                //    dialog.SelectedFloorIndex = 0;
+                //}   
+
                 DialogResult result = dialog.ShowDialog(); //check dialog result
                 if (result == DialogResult.OK)
                 {
@@ -88,6 +99,7 @@ namespace LiftSimulator
                     Passenger NewPassenger = new Passenger(MyForm.MyBuilding, this.MyFloor, dialog.SelectedFloorIndex);
                     //Rise an event
                     this.MyFloor.OnNewPassengerAppeared(new PassengerEventArgs(NewPassenger));
+                    //logWriter.Log($"New passenger ({NewPassenger.Id}) appeared");
                 }                
             }
         }

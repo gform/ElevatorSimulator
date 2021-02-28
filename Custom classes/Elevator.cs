@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Threading;
 using System.Timers;
-
+using LiftSimulator.Custom_classes;
 
 namespace LiftSimulator
 {
@@ -32,6 +32,10 @@ namespace LiftSimulator
         private int currentFrameNumber;
         private int elevatorAnimationDelay;        
         private System.Timers.Timer elevatorTimer;
+
+        public LogWriter logWriter;
+        private static int objCounter = 0;
+        public int Id { get; set; }
 
         #endregion
 
@@ -70,6 +74,9 @@ namespace LiftSimulator
                         
             //Add new elevator to floor's list
             currentFloor.AddRemoveElevatorToTheListOfElevatorsWaitingHere(this, true);
+
+            logWriter = myBuilding.logWriter;
+            this.Id = System.Threading.Interlocked.Increment(ref objCounter);
         }
 
         public void PrepareElevatorToGoToNextFloorOnTheList()
@@ -89,7 +96,7 @@ namespace LiftSimulator
             this.CloseTheDoor();            
 
             //Go!
-            GoToNextFloorOnTheList();            
+            GoToNextFloorOnTheList();
         }
 
         private void GoToNextFloorOnTheList()
@@ -108,6 +115,8 @@ namespace LiftSimulator
 
             //Update currentFloor
             this.currentFloor = GetNextFloorToVisit();
+            logWriter.Log($"Elevator ({Id}) is on floor ({currentFloor.FloorIndex}).");
+
 
             //Remove current floor from the list of floors to visit
             this.listOfFloorsToVisit.RemoveAt(0);
@@ -133,13 +142,14 @@ namespace LiftSimulator
                     return;
                 }
             }
-            
+
             //If elevator doesn't stop here, let it go to next floor
             GoToNextFloorOnTheList();            
         }
 
         private void FinalizeGoingToNextFloorOnTheList()
         {
+
             //Reset appropriate lamp on current floor
             switch (this.elevatorDirection)
             {
@@ -177,7 +187,7 @@ namespace LiftSimulator
             //Rise an event on current floor to inform passengers, who await
             currentFloor.OnElevatorHasArrivedOrIsNoteFullAnymore(new ElevatorEventArgs(this));
 
-            //Enable the timer            
+            //Enable the timer
             this.elevatorTimer.Start();
         }
         
@@ -199,6 +209,7 @@ namespace LiftSimulator
                         if (!GetListOfAllFloorsToVisit().Contains(myBuilding.ArrayOfAllFloors[i]))
                         {
                             GetListOfAllFloorsToVisit().Add(myBuilding.ArrayOfAllFloors[i]);
+                            logWriter.Log($"Floor ({myBuilding.ArrayOfAllFloors[i].FloorIndex}) added to travel list of elevator ({Id}).");
                         }
                     }
                 }
@@ -211,6 +222,7 @@ namespace LiftSimulator
                         if (!GetListOfAllFloorsToVisit().Contains(myBuilding.ArrayOfAllFloors[i]))
                         {
                             this.GetListOfAllFloorsToVisit().Add(myBuilding.ArrayOfAllFloors[i]);
+                            logWriter.Log($"Floor ({myBuilding.ArrayOfAllFloors[i].FloorIndex}) added to travel list of elevator ({Id}).");
                         }
                     }
                 }
@@ -224,10 +236,11 @@ namespace LiftSimulator
         {
             foreach (Passenger PassengerInsideThElevator in listOfPeopleInside)
             {
-                if (PassengerInsideThElevator.GetTargetFloor() == this.currentFloor)
+                if (PassengerInsideThElevator.GetTargetFloor() == this.currentFloor || myBuilding.Fire == true)
                 {
+                    logWriter.Log($"Passenger ({PassengerInsideThElevator.Id}) wants to get out on the current ({currentFloor.FloorIndex}) floor.");
                     return true;
-                }                
+                }
             }
             return false;
         }
@@ -277,7 +290,7 @@ namespace LiftSimulator
             else
             {
                 this.elevatorDirection = Direction.Down;
-            }            
+            }
         }
 
         public bool AddNewPassengerIfPossible(Passenger NewPassenger, Floor TargetFloor)
@@ -295,6 +308,7 @@ namespace LiftSimulator
                 if (this.listOfPeopleInside.Count >= this.maximumPeopleInside) //set flag, if needed
                 {
                     this.IsFull = true;
+                    logWriter.Log($"Elevator ({Id}) is full.");
                     this.SetElevatorStatus(ElevatorStatus.PreparingForJob); // to prevent other passengers attempt to get in
                 }
 
@@ -342,6 +356,7 @@ namespace LiftSimulator
 
         private void CloseTheDoor()
         {
+            logWriter.Log($"Elevator ({Id}) is closing the door");
             for (int i = 0; i < 5; i++)
             {
                 switch (this.currentFrameNumber)
@@ -372,6 +387,7 @@ namespace LiftSimulator
 
         private void OpenTheDoor()
         {
+            logWriter.Log($"Elevator ({Id}) is opening the door");
             for (int i = 0; i < 5; i++)
             {
                 switch (this.currentFrameNumber)
@@ -428,6 +444,7 @@ namespace LiftSimulator
             lock (locker) //To avoid e.g. setting and getting status at the same time
             {
                 this.elevatorStatus = Status;
+                logWriter.Log($"Elevator ({Id}) is ({this.GetElevatorStatus()})");
             }
         }
 
@@ -477,6 +494,25 @@ namespace LiftSimulator
 
         public void Elevator_ElevatorTimerElapsed(object sender, ElapsedEventArgs e)
         {
+            if (myBuilding.Fire == true)
+            {
+                //Update elevator's status
+                elevatorTimer.Stop();
+                SetElevatorStatus(ElevatorStatus.Idle);
+
+                //Inform all passengers inside
+                List<Passenger> PassengersInsideTheElevator = new List<Passenger>(listOfPeopleInside);
+                foreach (Passenger SinglePassengerInsideTheElevator in PassengersInsideTheElevator)
+                {
+                    SinglePassengerInsideTheElevator.ElevatorReachedNextFloor();
+                    Thread.Sleep(SinglePassengerInsideTheElevator.GetAnimationDelay() * 40); //to make sure all passengers will be visible when leaving the building
+                }
+                lock (locker)
+                {
+                    this.listOfFloorsToVisit.Clear();
+                }
+            }
+            
             if (GetNextFloorToVisit() == null)
             {
                 elevatorTimer.Stop();

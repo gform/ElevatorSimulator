@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiftSimulator.Custom_classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace LiftSimulator
         #region FIELDS
 
         public Building MyBuilding;
+        public LogWriter logWriter;
 
         #endregion FIELDS
 
@@ -26,12 +28,20 @@ namespace LiftSimulator
 
             //Initialize Building object
             MyBuilding = new Building();
+            logWriter = new LogWriter();
         }
 
         private void PaintBuilding(Graphics g)
         {
-            g.DrawImage(Properties.Resources.Building1, 12, 12, 734, 472);
+            g.DrawImage(Properties.Resources.Building, 12, 12, 983, 659);
         }
+        private void PaintFire(Graphics g)
+        {
+            g.DrawImage(Properties.Resources.Fire, 323, 55, 133, 164);
+            g.DrawImage(Properties.Resources.Ladder, 743, 234, 47, 423);
+            g.DrawImage(Properties.Resources.Fire_truck, 811, 533, 184, 128);
+        }
+
 
         private void PaintElevators(Graphics g)
         {
@@ -50,7 +60,7 @@ namespace LiftSimulator
             {
                 if ((PassengerToPaint != null) && (PassengerToPaint.GetPassengerVisibility()))
                 {
-                    g.DrawImage(PassengerToPaint.GetCurrentFrame(), PassengerToPaint.PassengerPosition.X, PassengerToPaint.PassengerPosition.Y + 15, 35, 75); // Y + 15, because passenger is 15 pixels lower than elevator
+                    g.DrawImage(PassengerToPaint.GetCurrentFrame(), PassengerToPaint.PassengerPosition.X, PassengerToPaint.PassengerPosition.Y + 15, 46, 75); // (35, 75) Y + 15, because passenger is 15 pixels lower than elevator
                 }
             }
         }
@@ -74,9 +84,24 @@ namespace LiftSimulator
             PaintBuilding(g);
             PaintElevators(g);
             PaintPassengers(g);
+            if (MyBuilding.Fire == true) PaintFire(g);
         }
 
         #endregion EVENT HANDLERS
 
+        private void fireButton_Click(object sender, EventArgs e)
+        {
+            if (MyBuilding.Fire == false)
+            {
+                MyBuilding.Fire = true;
+                logWriter.Log("BUILDING IS ON FIRE");
+            }
+            else
+            {
+                MyBuilding.Fire = false;
+                logWriter.Log("FIRE HAS BEEN EXTINGUISHED");
+            } 
+                
+        }
     }
 }
