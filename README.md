@@ -8,6 +8,7 @@ Multi-threaded and scalable elevator simulation written in C# (Windows Forms).
 
 - Changes made to the original project:
 	- new graphics;
+	- "New passenger" button dropdown has random floor by default;
 	- new fire event: the building is on fire, lifts stop moving, passengers escape;
 	- logging to a text file.
 
