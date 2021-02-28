@@ -131,6 +131,7 @@
     <Content Include="Resources\Bart_Simpson.png" />
     <Content Include="Resources\Batman.png" />
     <Content Include="Resources\Charlie_Brown.png" />
+    <Content Include="screenshot.png" />
     <None Include="Resources\Fire.png" />
     <None Include="Resources\Fire_truck.png" />
     <Content Include="Resources\Fred_Flintstone.png" />
